@@ -37,7 +37,6 @@ import {
   Newspaper,
   Landmark,
   ShieldCheck,
-  HeartHandshake,
 } from "lucide-react";
 
 export const DashboardPage: React.FC = () => {

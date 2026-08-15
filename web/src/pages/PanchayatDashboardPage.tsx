@@ -110,17 +110,17 @@ export const PanchayatDashboardPage: React.FC = () => {
     
     if (filterQueue) {
       if (filterQueue === "immediate") {
-        const isUrgent = issue.priority === "high" || issue.priority === "urgent" || issue.priority === "emergency" || issue.status === "reported";
+        const isUrgent = issue.category === "disaster" || issue.source === "hardware" || issue.status === "reported";
         if (!isUrgent) return false;
       } else if (filterQueue === "assignment") {
         if (issue.assigned_to) return false;
         if (!["reported", "ai_processed", "open"].includes(issue.status)) return false;
       } else if (filterQueue === "verification") {
-        if (issue.status !== "completed" && issue.status !== "resolved_pending") return false;
+        if (issue.status !== "field_completed" && issue.status !== "resolved") return false;
       } else if (filterQueue === "awaiting") {
         if (!["assigned", "in_progress"].includes(issue.status)) return false;
       } else if (filterQueue === "resolved") {
-        if (issue.status !== "resolved") return false;
+        if (issue.status !== "resolved" && issue.status !== "impact_verified") return false;
       }
     }
     return true;
@@ -402,11 +402,11 @@ export const PanchayatDashboardPage: React.FC = () => {
                       fontWeight: 700,
                       padding: "2px 8px",
                       borderRadius: "4px",
-                      backgroundColor: emp.is_active ? "var(--primary-50)" : "var(--bg-muted)",
-                      color: emp.is_active ? "var(--primary-700)" : "var(--text-muted)",
+                      backgroundColor: emp.last_attendance_status === "SIGNED_IN" ? "var(--primary-50)" : "var(--bg-muted)",
+                      color: emp.last_attendance_status === "SIGNED_IN" ? "var(--primary-700)" : "var(--text-muted)",
                     }}
                   >
-                    {emp.is_active ? "ACTIVE" : "INACTIVE"}
+                    {emp.last_attendance_status === "SIGNED_IN" ? "SIGNED IN" : "OFFLINE"}
                   </span>
                 </div>
               ))}
@@ -480,7 +480,7 @@ export const PanchayatDashboardPage: React.FC = () => {
           <div style={{ padding: "0.75rem", backgroundColor: "var(--bg-subtle)", borderRadius: "var(--radius-md)" }}>
             <div style={{ fontSize: "0.75rem", color: "var(--text-subtle)", fontWeight: 700, textTransform: "uppercase" }}>Affected Population Impact</div>
             <div style={{ fontSize: "1.5rem", fontWeight: 800, margin: "0.25rem 0", color: "var(--sdg-edu)" }}>
-              {issues.reduce((sum, i) => sum + (i.affected_population || 0), 0).toLocaleString()}
+              {impactCases.reduce((sum, c) => sum + (c.affected_population || 0), 0).toLocaleString()}
             </div>
             <div style={{ fontSize: "0.8rem", color: "var(--text-main)" }}>
               Total citizens with improved utility access.
@@ -513,7 +513,12 @@ export const PanchayatDashboardPage: React.FC = () => {
                 { sdg: "SDG 11 (Civic)", key: "SDG 11" },
                 { sdg: "SDG 13 (Climate)", key: "SDG 13" },
               ].map((item) => {
-                const count = issues.filter((i) => (i as any).sdg === item.key || (item.key === "SDG 6" && i.category === "water") || (item.key === "SDG 4" && i.category === "education") || (item.key === "SDG 11" && i.category === "civic") || (item.key === "SDG 13" && i.category === "environment")).length;
+                const count = issues.filter((i) =>
+                  (item.key === "SDG 6" && i.category === "water") ||
+                  (item.key === "SDG 4" && i.category === "education") ||
+                  (item.key === "SDG 11" && (i.category === "civic" || i.category === "sanitation" || i.category === "waste")) ||
+                  (item.key === "SDG 13" && (i.category === "environment" || i.category === "disaster"))
+                ).length;
                 return (
                   <div key={item.key} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem" }}>
                     <span>{item.sdg}</span>

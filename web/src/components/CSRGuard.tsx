@@ -1,13 +1,9 @@
-import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import React from "react";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { loginAsCsrDemo } from "../lib/demoSeed";
-import { Handshake, ArrowRight } from "lucide-react";
 
 export const CSRGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, isAuthenticated, loading, refreshUser } = useAuth();
-  const navigate = useNavigate();
-  const [switching, setSwitching] = useState(false);
+  const { user, isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (

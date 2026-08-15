@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
-import { loginAsPanchayatDemo, DEMO_CITIZEN_CREDENTIALS } from "../lib/demoSeed";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 import { NotificationIndicator } from "./NotificationIndicator";
@@ -54,35 +53,14 @@ const NavLink: React.FC<{
 
 export const Header: React.FC = () => {
   const { t } = useTranslation();
-  const { user, isAuthenticated, logout, login, refreshUser } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname.startsWith(path);
 
-  const handleRoleToggle = async () => {
-    if (user?.role === "panchayat") {
-      try {
-        await login(DEMO_CITIZEN_CREDENTIALS.email, DEMO_CITIZEN_CREDENTIALS.password);
-        await refreshUser();
-      } catch {
-        logout();
-      }
-    } else {
-      await loginAsPanchayatDemo();
-      await refreshUser();
-    }
-  };
-
   const isPanchayat = user?.role === "panchayat";
   const isEmployee = user?.role === "panchayat_employee";
   const isCsr = user?.role === "csr";
-  const logoColor = isPanchayat
-    ? "var(--sdg-civic)"
-    : isEmployee
-      ? "#0284c7"
-      : isCsr
-        ? "#065f46"
-        : "var(--primary-600)";
 
   return (
     <motion.header
