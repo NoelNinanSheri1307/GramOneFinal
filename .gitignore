@@ -1,0 +1,61 @@
+# ---- Environment / secrets ----
+.env
+.env.*
+!.env.example
+*.env
+!*.env.example
+
+# ---- Python / backend ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+*.log
+
+# ---- Node / web ----
+node_modules/
+dist/
+build/
+web-dist/
+*.tsbuildinfo
+
+# ---- Flutter / mobile ----
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/.packages
+mobile/build/
+mobile/.pub-cache/
+mobile/.pub/
+mobile/android/.gradle/
+mobile/ios/Pods/
+mobile/ios/.symlinks/
+mobile/*.iml
+
+# ---- ESP32 / hardware ----
+hardware/**/build/
+hardware/**/.pio/
+hardware/**/.pioenvs/
+hardware/**/.piolibdeps/
+hardware/**/.vscode/
+hardware/**/managed_components/
+hardware/**/sdkconfig.old
+hardware/**/sdkconfig.bak
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
