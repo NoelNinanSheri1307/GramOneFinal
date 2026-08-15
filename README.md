@@ -1,6 +1,6 @@
 # GramOne
 
-GramOne is a rural problem-to-impact platform connecting citizens, Panchayats, CSR partners and physical infrastructure. Citizens and hardware report problems; AI assists in interpreting language; deterministic backend engines decide evidence confidence, impact scoring, priority and CSR matching; and the resulting Impact Cases are carried to resolution with tracked impact.
+GramOne is a rural problem-to-impact platform connecting citizens, Panchayats, CSR partners and physical infrastructure. Citizens and hardware report problems; AI assists in interpreting language; deterministic, backend engines decide evidence confidence, impact scoring, priority and CSR matching; and the resulting Impact Cases are carried to resolution with tracked impact.
 
 > **Status: Working platform.** GramOne is a working civic-tech MVP covering citizen problem reporting, Panchayat administration, CSR partnership and the Community Information & Safety layer. See [Implementation status](#implementation-status).
 
